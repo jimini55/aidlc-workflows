@@ -65,6 +65,7 @@ This directory is used consistently across all platforms (Cline, Kiro CLI, Amazo
 - Workflow Planning (ALWAYS)
 - Application Design (CONDITIONAL)
 - Units Generation (CONDITIONAL)
+- PM System Sync (OPTIONAL - On-Demand)
 
 ---
 
@@ -258,6 +259,35 @@ This directory is used consistently across all platforms (Cline, Kiro CLI, Amazo
 4. Execute at appropriate depth (minimal/standard/comprehensive)
 5. **Wait for Explicit Approval**: Present detailed completion message (see units-generation.md for message format) - DO NOT PROCEED until user confirms
 6. **MANDATORY**: Log user's response in audit.md with complete raw input
+
+## PM System Sync (OPTIONAL - On-Demand)
+
+**Execute IF**:
+- User explicitly requests PM sync
+- User wants to sync artifacts to external PM system (Jira, Azure DevOps, etc.)
+
+**Skip IF**:
+- User does not request sync
+- No external PM system integration needed
+
+**Trigger Points**:
+- After User Stories stage completion
+- After Units Generation stage completion
+- On-demand at any point when user requests
+
+**Execution**:
+1. **MANDATORY**: Log sync request in audit.md
+2. Load all steps from `common/sync-to-pms.md`
+3. **Check for existing sync status** at `aidlc-docs/inception/plans/pm-sync-status.md` - reuse PM system if found
+4. Verify PM system is known, ask ONLY if no previous sync exists
+5. Sync applicable artifacts:
+   - User Stories (`aidlc-docs/inception/user-stories/stories.md`)
+   - Requirements (`aidlc-docs/inception/requirements/requirements.md`)
+   - Units of Work (`aidlc-docs/inception/application-design/unit-of-work.md`)
+   - Unit-Story Map (`aidlc-docs/inception/application-design/unit-of-work-story-map.md`)
+6. Update sync status file
+7. **Wait for Explicit Approval**: Present completion message - DO NOT PROCEED until user confirms
+8. **MANDATORY**: Log user's response in audit.md with complete raw input
 
 ---
 
